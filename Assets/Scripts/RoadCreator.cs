@@ -27,7 +27,7 @@ public class RoadCreator : MonoBehaviour {
 			lastTileWasEmpty = false;
 
 			int chanceOfObstacle = Random.Range(0, 100);
-			if (chanceOfObstacle <= 30 && totalTiles > 10) {
+			if (chanceOfObstacle <= 15 && totalTiles > 10) {
 				BoxCollider tileCollider = tileInstance.GetComponent<BoxCollider>();
 
 				GameObject randomObstacle = obstacles[Random.Range(0, obstacles.Length)];
