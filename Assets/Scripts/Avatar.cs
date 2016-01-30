@@ -6,8 +6,11 @@ public class Avatar : MonoBehaviour {
 	public int jumpingForce;
 	public bool isGrounded;
 	// Use this for initialization
+
+	Animator _animator;
+
 	void Start () {
-	
+		_animator = gameObject.GetComponent<Animator>();
 	}
 
 
@@ -31,6 +34,8 @@ public class Avatar : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
+
+		_animator.SetBool("Ground",isGrounded);
 
 		if(isGrounded )
 		if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.Space)) {
