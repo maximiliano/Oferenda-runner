@@ -38,7 +38,7 @@ public class Avatar : MonoBehaviour {
 		_animator.SetBool("Ground",isGrounded);
 
 		if(isGrounded )
-		if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.Space)) {
+		if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Mouse0)) {
 			this.gameObject.GetComponent<Rigidbody>().AddForce(Vector3.up * jumpingForce);
 		}
 
