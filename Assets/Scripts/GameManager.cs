@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour {
 	public int currentHighscore;
 	public GameObject gameOverPanel;
 	public GameObject winPanel;
+	public GameObject menuPanel;
 
 	void Start () {
 		currentHighscore = PlayerPrefs.GetInt("highscore");
@@ -56,8 +57,19 @@ public class GameManager : MonoBehaviour {
 		Application.LoadLevel("Menu");
 	}
 
+	public void InGameMenu() {
+		Time.timeScale = 0;
+		menuPanel.SetActive(true);
+	}
+
+	public void ContinueGame() {
+		Time.timeScale = 1;
+		menuPanel.SetActive(false);
+	}
+
 	public void QuitGame() {
 		Application.Quit();
 	}
+
 
 }
