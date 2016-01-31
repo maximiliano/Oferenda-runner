@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour {
 	public GameObject gameOverPanel;
 	public GameObject winPanel;
 	public GameObject menuPanel;
+	public GameObject creditsPanel;
 
 	void Start () {
 		currentHighscore = PlayerPrefs.GetInt("highscore");
@@ -59,12 +60,20 @@ public class GameManager : MonoBehaviour {
 
 	public void InGameMenu() {
 		Time.timeScale = 0;
+		if (creditsPanel.activeInHierarchy) {
+			creditsPanel.SetActive(false);
+		}
 		menuPanel.SetActive(true);
 	}
 
 	public void ContinueGame() {
 		Time.timeScale = 1;
 		menuPanel.SetActive(false);
+	}
+
+	public void ShowCredits() {
+		menuPanel.SetActive(false);
+		creditsPanel.SetActive(true);
 	}
 
 	public void QuitGame() {
