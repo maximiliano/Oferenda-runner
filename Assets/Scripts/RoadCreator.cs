@@ -74,12 +74,10 @@ public class RoadCreator : MonoBehaviour {
 
 	void drawBuilding() {
 		GameObject building = buildings[Random.Range(0, buildings.Length)];
-		Debug.Log(building.name);
 		BoxCollider buildingCollider = building.GetComponent<BoxCollider>();
 
 		Vector3 newPosition = new Vector3(endOfBuildingX - buildingCollider.size.x / 2,
 		                                  roadTileY, 
-//		                                  9);
 		                                  roadTileZ + buildingCollider.size.z / 2);
 		GameObject tileInstance = (GameObject)Instantiate(building, newPosition, Quaternion.identity);
 		endOfBuildingX = tileInstance.transform.position.x - buildingCollider.size.x / 2;
