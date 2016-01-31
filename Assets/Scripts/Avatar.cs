@@ -6,6 +6,7 @@ public class Avatar : MonoBehaviour {
 	public int jumpingForce;
 	public bool isGrounded;
 	public bool doubleJumped = false;
+	public bool collidedObstacle = false;
 
 	// Use this for initialization
 
@@ -19,6 +20,32 @@ public class Avatar : MonoBehaviour {
 	void OnCollisionEnter(Collision collision) {
 		isGrounded = true;
 		doubleJumped = false;
+
+		if (collision.gameObject.CompareTag("Obstacle")) {
+			collidedObstacle = true;
+		}
+
+//		void OnTriggerEnter(Collider other) {
+//		if (other.gameObject.CompareTag("Avatar")) {
+//			GameManager managerScript = GameObject.Find("GameManager").GetComponent<GameManager>();
+//			managerScript.score += 1;
+//			GameObject scoreBoard = GameObject.Find("ScoreBoard");
+//			scoreBoard.GetComponent<Text>().text = "Score: " + managerScript.score;
+//
+//			GameObject pai = GameObject.Find("Pai");
+//			pai.GetComponent<CameraControl2D>().offSet.x += 0.5f;
+//
+//			if ((Camera.main.transform.localPosition.x + ((Camera.main.GetComponent<Camera>().orthographicSize*2.2))) < pai.transform.position.x) {
+//				managerScript.playerWon = true;
+//				other.gameObject.GetComponent<Avatar>().speed = 0;
+//				other.gameObject.GetComponent<Rigidbody>().isKinematic = true;
+//				Destroy(pai);
+//			}
+//
+//			Destroy(this.gameObject);
+//		}
+//	}
+//
 	}
 
 	void OnCollisionStay(Collision collision) {
@@ -27,6 +54,19 @@ public class Avatar : MonoBehaviour {
 
 	void OnCollisionExit(Collision collision) {
 		isGrounded = false;
+
+		if (collision.gameObject.CompareTag("Obstacle")) {
+			collidedObstacle = false;
+		}
+	}
+
+	void bringFatherCloser() {
+		GameManager managerScript = GameObject.Find("GameManager").GetComponent<GameManager>();
+		GameObject pai = GameObject.Find("Pai");
+		pai.GetComponent<CameraControl2D>().offSet.x -= 0.1f;
+		if (pai.GetComponent<CameraControl2D>().offSet.x <= 0) {
+			managerScript.avatarIsDead = true;
+		}
 	}
 
 	// Update is called once per frame
@@ -51,6 +91,10 @@ public class Avatar : MonoBehaviour {
 
 		if (this.transform.position.y < 0) {
             GameObject.Find("GameManager").GetComponent<GameManager>().avatarIsDead = true;
+		}
+
+		if (collidedObstacle) {
+			bringFatherCloser();
 		}
 	}
 }
