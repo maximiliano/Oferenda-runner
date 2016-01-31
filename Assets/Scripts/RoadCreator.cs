@@ -4,10 +4,16 @@ using System.Collections;
 public class RoadCreator : MonoBehaviour {
 
 	public float endOfRoadX;
+	public float roadTileY;
+	public float roadTileZ;
+	public float endOfBuildingX;
 	public GameObject roadTile;
+	public GameObject lastRoadTile;
+	public GameObject lastBuilding;
 	public GameObject obstacle;
 	public GameObject item;
 	public GameObject ceil;
+	public GameObject[] buildings;
 	public float tileSize;
 	public bool lastTileWasEmpty = false;
 	public int totalTiles = 0;
@@ -16,7 +22,14 @@ public class RoadCreator : MonoBehaviour {
 
 
 	void Start () {
-		tileSize = roadTile.GetComponent<BoxCollider>().size.x;
+//		tileSize = roadTile.GetComponent<BoxCollider>().size.x;
+		BoxCollider tileCollider = lastRoadTile.GetComponent<BoxCollider>();
+		tileSize = tileCollider.size.x;
+		roadTileZ = lastRoadTile.transform.position.y + tileCollider.size.y / 2;
+		roadTileZ = lastRoadTile.transform.position.z + tileCollider.size.z / 2;
+
+		BoxCollider buildingCollider = lastBuilding.GetComponent<BoxCollider>();
+		endOfBuildingX = buildingCollider.transform.position.x - buildingCollider.size.x / 2;
 	}
 
 	void drawTile() {
@@ -59,10 +72,26 @@ public class RoadCreator : MonoBehaviour {
 		GameObject ceilInstance = (GameObject)Instantiate(ceil, newPosition, Quaternion.identity);
 	}
 
+	void drawBuilding() {
+		GameObject building = buildings[Random.Range(0, buildings.Length)];
+		Debug.Log(building.name);
+		BoxCollider buildingCollider = building.GetComponent<BoxCollider>();
+
+		Vector3 newPosition = new Vector3(endOfBuildingX - buildingCollider.size.x / 2,
+		                                  roadTileY, 
+//		                                  9);
+		                                  roadTileZ + buildingCollider.size.z / 2);
+		GameObject tileInstance = (GameObject)Instantiate(building, newPosition, Quaternion.identity);
+		endOfBuildingX = tileInstance.transform.position.x - buildingCollider.size.x / 2;
+	}
+
 	void Update () {
 		if ((Camera.main.transform.localPosition.x - ((Camera.main.GetComponent<Camera>().orthographicSize * 3))) < endOfRoadX ) {
 			drawTile();
 			drawCeil();
+		}
+		if ((Camera.main.transform.localPosition.x - ((Camera.main.GetComponent<Camera>().orthographicSize * 3))) < endOfBuildingX) {
+			drawBuilding();
 		}
 	}
 }
