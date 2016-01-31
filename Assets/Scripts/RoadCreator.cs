@@ -6,10 +6,13 @@ public class RoadCreator : MonoBehaviour {
 	public float endOfRoadX;
 	public GameObject roadTile;
 	public GameObject obstacle;
+	public GameObject item;
 	public float tileSize;
 	public bool lastTileWasEmpty = false;
 	public int totalTiles = 0;
 	public int obstacleChance = 15;
+	public int itemChance = 15;
+
 
 	void Start () {
 		tileSize = roadTile.GetComponent<BoxCollider>().size.x;
@@ -39,6 +42,13 @@ public class RoadCreator : MonoBehaviour {
 				GameObject obstacleInstance = (GameObject)Instantiate(obstacle, obstaclePosition, Quaternion.identity);
 			}
 		}
+
+		int chanceOfItem = Random.Range(0, 100);
+		if (chanceOfHole <= itemChance) {
+			Vector3 itemPosition = new Vector3(endOfRoadX, Random.Range(2, 8), 0);
+			GameObject itemInstance = (GameObject)Instantiate(item, itemPosition, Quaternion.identity);
+		}
+
 		totalTiles += 1;
 	}
 
