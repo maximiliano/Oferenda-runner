@@ -2,14 +2,19 @@
 using System.Collections;
 
 public class GameManager : MonoBehaviour {
+	public GameObject avatar;
+	public bool avatarIsDead = false;
 
-	// Use this for initialization
 	void Start () {
-	
 	}
 	
-	// Update is called once per frame
+	void checkDeath() {
+		if (avatarIsDead) {
+			Application.LoadLevel("Menu");
+		}
+	}
+
 	void Update () {
-	
+		checkDeath();
 	}
 }
