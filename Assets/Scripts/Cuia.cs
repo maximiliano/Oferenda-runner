@@ -11,9 +11,11 @@ public class Cuia : MonoBehaviour {
 
 	void OnTriggerEnter(Collider other) {
 		if (other.gameObject.CompareTag("Avatar")) {
-			GameObject.Find("GameManager").GetComponent<GameManager>().score += 1;
+			GameManager managerScript = GameObject.Find("GameManager").GetComponent<GameManager>();
+			managerScript.score += 1;
 			GameObject scoreBoard = GameObject.Find("ScoreBoard");
-			scoreBoard.GetComponent<Text>().text = "Score: " + GameObject.Find("GameManager").GetComponent<GameManager>().score;
+			scoreBoard.GetComponent<Text>().text = "Score: " + managerScript.score;
+
 			Destroy(this.gameObject);
 		}
 	}
