@@ -4,7 +4,6 @@ using UnityEngine;
 using System.Collections;
 
 // Classe que controla o movimento da camera.
-[ExecuteInEditMode]
 public class CameraControl2D : MonoBehaviour {
 
 	public Transform target;
