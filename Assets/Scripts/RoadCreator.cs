@@ -7,6 +7,7 @@ public class RoadCreator : MonoBehaviour {
 	public GameObject roadTile;
 	public GameObject obstacle;
 	public GameObject item;
+	public GameObject ceil;
 	public float tileSize;
 	public bool lastTileWasEmpty = false;
 	public int totalTiles = 0;
@@ -52,9 +53,16 @@ public class RoadCreator : MonoBehaviour {
 		totalTiles += 1;
 	}
 
+	void drawCeil() {
+		Vector3 newPosition = new Vector3(endOfRoadX, 
+			                              ceil.GetComponent<BoxCollider>().size.y * 9, 0);
+		GameObject ceilInstance = (GameObject)Instantiate(ceil, newPosition, Quaternion.identity);
+	}
+
 	void Update () {
 		if ((Camera.main.transform.localPosition.x - ((Camera.main.GetComponent<Camera>().orthographicSize * 3))) < endOfRoadX ) {
 			drawTile();
+			drawCeil();
 		}
 	}
 }
