@@ -5,10 +5,11 @@ public class RoadCreator : MonoBehaviour {
 
 	public float endOfRoadX;
 	public GameObject roadTile;
-	public GameObject[] obstacles;
+	public GameObject obstacle;
 	public float tileSize;
 	public bool lastTileWasEmpty = false;
 	public int totalTiles = 0;
+	public int obstacleChance = 15;
 
 	void Start () {
 		tileSize = roadTile.GetComponent<BoxCollider>().size.x;
@@ -27,17 +28,15 @@ public class RoadCreator : MonoBehaviour {
 			lastTileWasEmpty = false;
 
 			int chanceOfObstacle = Random.Range(0, 100);
-			if (chanceOfObstacle <= 15 && totalTiles > 10) {
+			if (chanceOfObstacle <= obstacleChance && totalTiles > 10) {
 				BoxCollider tileCollider = tileInstance.GetComponent<BoxCollider>();
 
-				GameObject randomObstacle = obstacles[Random.Range(0, obstacles.Length)];
-				float ySize = randomObstacle.GetComponent<BoxCollider>().size.y;
-
+				float obstacleHeight = obstacle.GetComponent<BoxCollider>().size.y;
 				Vector3 obstaclePosition = new Vector3(tileCollider.transform.position.x,
-			    	                                   tileCollider.transform.position.y + tileCollider.size.y + ySize/2,
+				                                       tileCollider.transform.position.y + tileCollider.size.y + obstacleHeight/2,
 			        	                               tileCollider.transform.position.z);
 
-				GameObject obstacleInstance = (GameObject)Instantiate(randomObstacle, obstaclePosition, Quaternion.identity);
+				GameObject obstacleInstance = (GameObject)Instantiate(obstacle, obstaclePosition, Quaternion.identity);
 			}
 		}
 		totalTiles += 1;
